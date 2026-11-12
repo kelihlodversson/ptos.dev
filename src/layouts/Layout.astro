@@ -1,7 +1,7 @@
 ---
 import '../styles/global.css';
-const title = 'pTOS — Portable TOS | Classic roots. New horizons.';
-const description = 'A portable, open-source, TOS-compatible operating system derived from EmuTOS. Familiar GEM roots, with m68k, ARM and x86-64 in view. Under active development.';
+const { title = 'pTOS — Portable TOS | Classic roots. New horizons.', description = 'A portable, open-source, TOS-compatible operating system derived from EmuTOS. Familiar GEM roots, with m68k, ARM and x86-64 in view. Under active development.' } = Astro.props;
+const canonical = new URL(Astro.url.pathname, 'https://ptos.dev').href;
 ---
 <!doctype html>
 <html lang="en">
@@ -10,11 +10,11 @@ const description = 'A portable, open-source, TOS-compatible operating system de
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href="https://ptos.dev/" />
+    <link rel="canonical" href={canonical} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="theme-color" content="#f8f6f0" />
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://ptos.dev/" />
+    <meta property="og:url" content={canonical} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content="https://ptos.dev/images/pterry-original.jpg" />

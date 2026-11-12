@@ -34,7 +34,7 @@ alt text and Open Graph metadata if needed. The current original is an opaque
 The favicon is a typographic `p` using the site's rust accent.
 
 Keep future pages in `src/pages/` and reuse the layout. Downloads, documentation
-and news are intentionally outside this first release. Verify technical claims
+and news remain outside the current scope. Verify technical claims
 against the pTOS readme and current source documentation before changing copy.
 
 ## Deployment and domain
@@ -109,3 +109,15 @@ The web font copy (`AtariST8x16SystemFont-web.ttf`) aliases the original close
 glyph at U+0085 to private-use U+E085. Browsers treat U+0085 as a control character;
 the alias preserves the exact glyph outlines while making it reliably renderable.
 The supplied original TTF is retained unchanged.
+
+## Project pages
+
+`src/data/projects.ts` contains the five project introductions and repository
+links, grouped into subprojects and related apps. Static routes in
+`src/pages/projects/` and `src/pages/apps/` use `src/layouts/Project.astro`.
+The shared document layout gives each route its own title, description and
+canonical URL. Homepage cards link to every project. TypeShelf screenshots in
+`public/images/typeshelf/` come unchanged from its `docs/images/` directory;
+the app page credits the source. RCS currently has no published screenshots
+in its repository. Update descriptions against the upstream README and current
+port documentation, keeping experimental support and known limits explicit.

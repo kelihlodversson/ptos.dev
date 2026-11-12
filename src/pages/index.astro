@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import { projects } from '../data/projects';
 ---
 <Layout>
   <div class="site-shell">
@@ -32,6 +33,10 @@ import Layout from '../layouts/Layout.astro';
         <p>Classic GEM at heart. A shared, portable architecture ahead. Work spans m68k, ARM and x86-64; support varies by target, and ports and subsystems are still evolving.</p>
         <p class="architecture-label" aria-label="Target processor families">m68k <span aria-hidden="true">/</span> ARM <span aria-hidden="true">/</span> x86-64</p>
       </section>
+      {['projects', 'apps'].map(group => <section class="project-directory" id={group} aria-labelledby={`${group}-title`}>
+        <div class="directory-heading"><p class="eyebrow">{group === 'projects' ? 'Building the foundations' : 'Made for GEM'}</p><h2 id={`${group}-title`}>{group === 'projects' ? 'Subprojects' : 'Related apps'}</h2><p>{group === 'projects' ? 'Tools, libraries and compatibility work that help the pTOS ecosystem grow.' : 'Classic ideas and new tools, taking shape alongside pTOS.'}</p></div>
+        <div class:list={['project-grid', { 'app-grid': group === 'apps' }]}>{projects.filter(project => project.group === group).map(project => <article class="project-card"><p class="eyebrow">{project.category}</p><h3><a href={`/${group}/${project.slug}/`}>{project.name}</a></h3><p>{project.summary}</p><a class="read-more" href={`/${group}/${project.slug}/`}>Explore {project.name} <span aria-hidden="true">→</span></a></article>)}</div>
+      </section>)}
     </main>
     <footer><p>pTOS is derived from <a href="https://github.com/emutos/emutos">EmuTOS</a>. Built on a remarkable foundation.</p><a href="https://github.com/kelihlodversson/pTOS">pTOS on GitHub <svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12 12 4M4 4h8v8" /></svg></a></footer>
   </div>

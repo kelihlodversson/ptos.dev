@@ -1,0 +1,34 @@
+---
+import Layout from './Layout.astro';
+const { project } = Astro.props;
+---
+<Layout title={`${project.name} | pTOS`} description={project.summary}>
+  <div class="site-shell">
+    <header class="site-header">
+      <a class="wordmark" href="/" aria-label="pTOS home">pTOS<span class="wordmark-dot" aria-hidden="true">.</span></a>
+      <a class="header-link" href={`/#${project.group}`}>All {project.group === 'apps' ? 'related apps' : 'subprojects'} <span aria-hidden="true">←</span></a>
+    </header>
+    <main id="main" class="project-page">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href={`/#${project.group}`}>{project.group === 'apps' ? 'Related apps' : 'Subprojects'}</a></nav>
+      <div class="project-intro">
+        <p class="eyebrow">{project.category}</p>
+        <h1>{project.name}</h1>
+        <p class="project-tagline">{project.tagline}</p>
+        <p class="project-summary">{project.summary}</p>
+        <div class="actions"><a class="primary-link" href={project.repository}>Explore on GitHub <span aria-hidden="true">→</span></a><a class="secondary-link" href={`${project.repository}/issues`}>Follow Development <span aria-hidden="true">→</span></a></div>
+      </div>
+      <div class="project-sections">
+        {project.sections.map(section => <section><h2>{section.title}</h2><p>{section.text}</p></section>)}
+      </div>
+      {project.slug === 'typeshelf' && <section class="screenshots" aria-labelledby="screenshots-title">
+        <p class="eyebrow">Inside the app</p><h2 id="screenshots-title">TypeShelf on pTOS</h2>
+        <p class="screenshot-context">Original project screenshots from pTOS under QEMU virt-arm, with built-in scalable fonts in 32-bit colour.</p>
+        <figure><a href="/images/typeshelf/screenshot-icons.png"><img src="/images/typeshelf/screenshot-icons.png" width="804" height="260" loading="lazy" alt="TypeShelf on pTOS showing installed font families in its Icons overview." /></a><figcaption>Icons view — browse installed fonts by family.</figcaption></figure>
+        <figure><a href="/images/typeshelf/screenshot-specimen.png"><img src="/images/typeshelf/screenshot-specimen.png" width="804" height="604" loading="lazy" alt="TypeShelf on pTOS displaying a font specimen and its character grid." /></a><figcaption>Specimen view — preview a typeface and explore its characters.</figcaption></figure>
+        <p class="image-credit">Screenshots from the <a href="https://github.com/kelihlodversson/TypeShelf#screenshots">TypeShelf repository</a>.</p>
+      </section>}
+      <aside class="project-note">This page introduces the project. Its <a href={project.repository}>repository</a> is the authoritative source for current capabilities, build instructions and limitations.</aside>
+    </main>
+    <footer><p>pTOS is derived from <a href="https://github.com/emutos/emutos">EmuTOS</a>.</p><a href="/">Back to pTOS</a></footer>
+  </div>
+</Layout>

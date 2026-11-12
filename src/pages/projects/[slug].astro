@@ -1,0 +1,9 @@
+---
+import { projects } from '../../data/projects';
+import Project from '../../layouts/Project.astro';
+export function getStaticPaths() {
+  return projects.filter(project => project.group === 'projects').map(project => ({ params: { slug: project.slug }, props: { project } }));
+}
+const { project } = Astro.props;
+---
+<Project project={project} />
