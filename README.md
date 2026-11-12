@@ -7,7 +7,7 @@ activity live at https://github.com/kelihlodversson/pTOS.
 ## Local development
 
 Use Node.js 24 LTS and npm. Astro generates static HTML and CSS with no browser
-JavaScript, external fonts, backend, or UI framework.
+JavaScript, external font services, backend, or UI framework.
 
 ```sh
 npm ci
@@ -100,3 +100,7 @@ routes and no custom redirect/cache rulesets. SSL mode was Full. No DNS or TLS
 changes were applied because GitHub had not accepted the custom domain. Public
 validation also requires allowing `ptos.dev` and `www.ptos.dev` through this
 execution environment's outbound network policy.
+
+The decorative pTerry title bar uses the supplied Atari ST 8x16 System Font
+by divVerent, self-hosted at `public/fonts/AtariST8x16SystemFont.ttf`. Source:
+https://www.dafont.com/atari-st-8x16-system-font.font . Other text uses system fonts.
