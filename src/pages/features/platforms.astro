@@ -1,0 +1,23 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import { sourceRoot } from '../../data/features';
+---
+<Layout title="Platform & configuration status | pTOS" description="How pTOS features differ between m68k, ARM and x86-64 configurations: boot evidence, private address spaces and the available AES paths.">
+  <div class="site-shell">
+    <SiteHeader />
+    <main id="main" class="project-page feature-detail">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/features/">Features &amp; Ambitions</a></nav>
+      <div class="project-intro"><p class="eyebrow">Features &amp; Ambitions</p><h1>Platform &amp; configuration status</h1><p class="project-tagline">The configuration matters as much as the CPU.</p><p class="project-summary">pTOS spans three processor families, but its memory, GUI and driver paths are not identical. This overview brings their main boundaries together. It summarizes source documentation, rather than certifying every board or application.</p></div>
+      <section aria-labelledby="platform-table-title"><h2 id="platform-table-title">The architectural picture</h2><div class="platform-table-wrap" role="region" aria-label="Platform feature comparison; scroll horizontally on small screens" tabindex="0"><table class="platform-table"><caption>Current documented paths — a tested configuration does not establish all features on all machines.</caption><thead><tr><th scope="col">Family</th><th scope="col">Runtime evidence</th><th scope="col">Address spaces</th><th scope="col">AES / GUI boundary</th></tr></thead><tbody>
+        <tr><th scope="row">m68k</th><td>Atari emulation in Hatari; QEMU m68k virt; Amiga MMU configurations under Amiberry.</td><td>Selected 68030/040/060 MMU configurations. Non-MMU builds retain flat memory. No execute-disable bit on these MMUs.</td><td>Traditional kernel AES in flat configurations. Kernel AES is excluded with per-process address spaces; external libaes is not yet ported.</td></tr>
+        <tr><th scope="row">ARM</th><td>Documented Raspberry Pi 2B, 3 and 400 boots, plus QEMU virt and raspi2b tests. Test coverage differs by configuration.</td><td>Documented virt-arm-aspace and rpi2-aspace paths. The raspi2b address-space test is emulator evidence, not physical-board validation.</td><td>Traditional kernel AES in flat configurations. Protected configurations have no external libaes port yet.</td></tr>
+        <tr><th scope="row">x86-64 / x32</th><td>QEMU PC with UEFI/OVMF; ring-3 x32 EmuCON. Separate libaes desktop and application regression configurations.</td><td>Per-process page tables with checked user access and supervisor-only kernel mappings.</td><td>Opt-in libaes.so over kernel CUIS and native VDI. Resident desktop, RCS and accessory coverage; cooperative execution and incomplete extensions.</td></tr>
+      </tbody></table></div></section>
+      <aside class="feature-status-key"><strong>Booted does not mean complete.</strong><p>The basic x86-64 CLI configuration is not the libaes desktop configuration. A physical Raspberry Pi boot is not evidence that every protected-memory or display option works on that board. Follow the source status and configuration notes for the exact setup.</p></aside>
+      <section class="feature-evidence" aria-labelledby="platform-sources"><h2 id="platform-sources">Authoritative status</h2><ul><li><a href={`${sourceRoot}doc/status.txt`}>Boot-tested hardware and emulator configurations</a></li><li><a href={`${sourceRoot}doc/libaes-compatibility.md`}>AES configuration and compatibility matrix</a></li><li><a href={`${sourceRoot}doc/mmu-address-space.txt`}>ARM and m68k memory configuration scope</a></li><li><a href={`${sourceRoot}doc/x86_64-address-space.txt`}>x86-64 address-space model</a></li></ul></section>
+      <nav class="feature-related" aria-label="Related topics"><a href="/features/">All features &amp; ambitions →</a><a href="/features/portable-architecture/">Portable architecture →</a><a href="/features/userspace-aes/">Userspace AES →</a></nav>
+    </main>
+    <footer><p>pTOS is derived from <a href="https://github.com/emutos/emutos">EmuTOS</a>.</p><a href="/">Back to pTOS</a></footer>
+  </div>
+</Layout>

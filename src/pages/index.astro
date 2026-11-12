@@ -1,14 +1,11 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import { projects } from '../data/projects';
+import SiteHeader from '../components/SiteHeader.astro';
 ---
 <Layout>
   <div class="site-shell">
-    <header class="site-header">
-      <a class="wordmark" href="/" aria-label="pTOS home">pTOS<span class="wordmark-dot" aria-hidden="true">.</span></a>
-      <span class="header-note">Portable by nature.</span>
-      <a class="header-link" href="https://github.com/kelihlodversson/pTOS">Source code <svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12 12 4M4 4h8v8" /></svg></a>
-    </header>
+    <SiteHeader />
     <main id="main">
       <section class="hero" aria-labelledby="hero-title">
         <div class="hero-copy">
@@ -32,6 +29,10 @@ import { projects } from '../data/projects';
         <div><p class="eyebrow">The direction</p><h2 id="direction-title">Familiar foundations.<br />Room to explore.</h2></div>
         <p>Classic GEM at heart. A shared, portable architecture ahead. Work spans m68k, ARM and x86-64; support varies by target, and ports and subsystems are still evolving.</p>
         <p class="architecture-label" aria-label="Target processor families">m68k <span aria-hidden="true">/</span> ARM <span aria-hidden="true">/</span> x86-64</p>
+      </section>
+      <section class="feature-home" aria-labelledby="feature-home-title">
+        <div><p class="eyebrow">Features &amp; Ambitions</p><h2 id="feature-home-title">Familiar GEM.<br />A different foundation.</h2></div>
+        <div><p>Multiple processor architectures. Separate process address spaces on supported MMU configurations. An experimental userspace AES for x32. Explore what pTOS does today, and the ambitions shaping its next steps.</p><a class="read-more" href="/features/">Explore features &amp; ambitions <span aria-hidden="true">→</span></a></div>
       </section>
       {['projects', 'apps'].map(group => <section class="project-directory" id={group} aria-labelledby={`${group}-title`}>
         <div class="directory-heading"><p class="eyebrow">{group === 'projects' ? 'Building the foundations' : 'Made for GEM'}</p><h2 id={`${group}-title`}>{group === 'projects' ? 'Subprojects' : 'Related apps'}</h2><p>{group === 'projects' ? 'Tools, libraries and compatibility work that help the pTOS ecosystem grow.' : 'Classic ideas and new tools, taking shape alongside pTOS.'}</p></div>

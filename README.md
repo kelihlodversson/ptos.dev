@@ -117,3 +117,28 @@ canonical URL. Homepage cards link to every project. TypeShelf screenshots in
 the app page credits the source. RCS currently has no published screenshots
 in its repository. Update descriptions against the upstream README and current
 port documentation, keeping experimental support and known limits explicit.
+
+## Features & Ambitions
+
+`src/pages/features/index.astro` introduces seven features, with the three main
+architectural directions first: portability, per-process address spaces and
+userspace AES. `src/data/features.ts` contains their summaries, implementation
+scope, limitations, ambitions and links to source evidence. The static detail
+route uses `src/components/FeatureDiagram.astro` for responsive HTML/CSS diagrams;
+no diagram runtime or client JavaScript is shipped. `features/platforms.astro`
+keeps the main architecture/configuration comparison in one place.
+
+Technical content was reviewed against pTOS source revision
+`fc3148179494f1b507ed38ee4c328ad52624fecf` on 2026-11-12, particularly
+`doc/libaes-compatibility.md`, `doc/cuis.txt`, `doc/mmu-address-space.txt`,
+`doc/x86_64-address-space.txt`, `doc/elf-shared.txt` and `doc/status.txt`.
+Some documents retain historical design material: the current libaes inventory
+is the authority for its API and configuration scope, not the retired typed
+kernel AES service. Keep userspace AES's x32-only status and the GUI limits of
+protected ARM/m68k configurations explicit when updating content.
+
+`public/images/features/libaes-objects.png` is the unchanged source screenshot
+from pTOS's `doc/screenshots/`; its feature page credits that source. The fonts
+page reuses TypeShelf's original specimen screenshot. Diagrams are conceptual
+ownership/architecture explanations, not hardware or memory-layout screenshots.
+`src/components/SiteHeader.astro` provides shared site navigation.

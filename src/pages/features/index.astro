@@ -1,0 +1,31 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import { features } from '../../data/features';
+---
+<Layout title="Features & Ambitions | pTOS" description="Explore pTOS: multiple architectures, separate process address spaces and userspace AES, alongside its TOS/GEM roots. What exists today, and where it is heading.">
+  <div class="site-shell">
+    <SiteHeader />
+    <main id="main" class="features-page">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><span aria-current="page">Features &amp; Ambitions</span></nav>
+      <div class="features-intro">
+        <p class="eyebrow">The familiar, taken further</p>
+        <h1>Features <span>&amp; Ambitions</span></h1>
+        <p class="feature-lead">Portable across processors. Separate address spaces. GEM application services in userspace.</p>
+        <p>These are central directions in pTOS: carrying a familiar environment forward while rethinking the architecture beneath it. Some foundations are already in use; newer paths are experimental and depend on the target and build configuration.</p>
+      </div>
+      <nav class="feature-pillars" aria-label="Core architectural directions">
+        {features.filter(feature => feature.pillar).map((feature, index) => <a href={`/features/${feature.slug}/`}><span class="pillar-number" aria-hidden="true">0{index + 1}</span><span>{feature.shortTitle}</span><span aria-hidden="true">→</span></a>)}
+      </nav>
+      <aside class="feature-status-key"><strong>How to read the status</strong><p><span class="status-badge available">Available</span> describes an existing foundation on supported configurations. <span class="status-badge experimental">Experimental</span> means an implemented development path with significant limits. Each page separates current behavior from ambition. pTOS remains under active development.</p><a href="/features/platforms/">See platform &amp; configuration status →</a></aside>
+      <div class="feature-list">
+        {features.map((feature, index) => <section class:list={['feature-row', { 'feature-row-core': feature.pillar }]} aria-labelledby={`${feature.slug}-heading`}>
+          <div class="feature-row-heading"><span class="feature-index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span><h2 id={`${feature.slug}-heading`}><a href={`/features/${feature.slug}/`}>{feature.title}</a></h2><span class:list={['status-badge', feature.status.toLowerCase()]}>{feature.status}</span></div>
+          <div class="feature-row-copy"><p>{feature.summary}</p><p class="feature-scope">{feature.scope}</p><a class="read-more" href={`/features/${feature.slug}/`}>Explore {feature.shortTitle} <span aria-hidden="true">→</span></a></div>
+        </section>)}
+      </div>
+      <aside class="project-note">Technical scope follows the <a href="https://github.com/kelihlodversson/pTOS">pTOS source documentation</a>. A successful build, a boot test and a working desktop establish different things; none is a blanket claim of production readiness.</aside>
+    </main>
+    <footer><p>pTOS is derived from <a href="https://github.com/emutos/emutos">EmuTOS</a>.</p><a href="/">Back to pTOS</a></footer>
+  </div>
+</Layout>

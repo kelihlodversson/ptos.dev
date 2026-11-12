@@ -1,13 +1,11 @@
 ---
 import Layout from './Layout.astro';
+import SiteHeader from '../components/SiteHeader.astro';
 const { project } = Astro.props;
 ---
 <Layout title={`${project.name} | pTOS`} description={project.summary}>
   <div class="site-shell">
-    <header class="site-header">
-      <a class="wordmark" href="/" aria-label="pTOS home">pTOS<span class="wordmark-dot" aria-hidden="true">.</span></a>
-      <a class="header-link" href={`/#${project.group}`}>All {project.group === 'apps' ? 'related apps' : 'subprojects'} <span aria-hidden="true">←</span></a>
-    </header>
+    <SiteHeader />
     <main id="main" class="project-page">
       <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href={`/#${project.group}`}>{project.group === 'apps' ? 'Related apps' : 'Subprojects'}</a></nav>
       <div class="project-intro">

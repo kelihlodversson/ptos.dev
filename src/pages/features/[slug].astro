@@ -1,0 +1,32 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import SiteHeader from '../../components/SiteHeader.astro';
+import FeatureDiagram from '../../components/FeatureDiagram.astro';
+import { features, sourceRoot } from '../../data/features';
+export function getStaticPaths() {
+  return features.map(feature => ({ params: { slug: feature.slug }, props: { feature } }));
+}
+const { feature } = Astro.props;
+---
+<Layout title={`${feature.title} | Features & Ambitions | pTOS`} description={feature.summary}>
+  <div class="site-shell">
+    <SiteHeader />
+    <main id="main" class="project-page feature-detail">
+      <nav class="breadcrumb" aria-label="Breadcrumb"><a href="/">Home</a><span aria-hidden="true">/</span><a href="/features/">Features &amp; Ambitions</a></nav>
+      <div class="project-intro">
+        <p class="eyebrow">Features &amp; Ambitions</p>
+        <h1>{feature.title}</h1>
+        <p class="project-tagline">{feature.tagline}</p>
+        <div class="feature-state"><span class:list={['status-badge', feature.status.toLowerCase()]}>{feature.status}</span><span>{feature.scope}</span></div>
+        <p class="project-summary">{feature.summary}</p>
+      </div>
+      {feature.diagram && <FeatureDiagram kind={feature.diagram} />}
+      <div class="project-sections">{feature.sections.map(section => <section><h2>{section.title}</h2><p>{section.text}</p></section>)}</div>
+      {feature.image === 'aes' && <figure class="feature-screenshot"><a href="/images/features/libaes-objects.png"><img src="/images/features/libaes-objects.png" width="1280" height="800" loading="lazy" alt="pTOS libaes object-rendering demonstration showing classic GEM buttons, object states and an editable text field drawn in user mode." /></a><figcaption>Real libaes object-rendering demonstration from the <a href={`${sourceRoot}doc/screenshots/libaes-objects.png`}>pTOS source repository</a>. It illustrates userspace object painting, not complete application or extension compatibility.</figcaption></figure>}
+      {feature.image === 'fonts' && <figure class="feature-screenshot"><a href="/apps/typeshelf/"><img src="/images/typeshelf/screenshot-specimen.png" width="804" height="604" loading="lazy" alt="TypeShelf on pTOS showing a scalable Arial specimen and a Unicode character grid." /></a><figcaption>TypeShelf’s font specimen on pTOS under QEMU virt-arm. Original screenshot from the <a href="https://github.com/kelihlodversson/TypeShelf#screenshots">TypeShelf project</a>; see the <a href="/apps/typeshelf/">app page</a> for context.</figcaption></figure>}
+      <section class="feature-evidence" aria-labelledby="evidence-title"><p class="eyebrow">Go deeper</p><h2 id="evidence-title">Documentation &amp; evidence</h2><ul>{feature.sources.map(source => <li><a href={`${sourceRoot}${source.path}`}>{source.label}</a></li>)}</ul><p>The linked documents describe implementation scope and known limits. Check their current status before choosing a configuration.</p></section>
+      <nav class="feature-related" aria-label="Related topics">{feature.related.map(link => <a href={link.href}>{link.label} <span aria-hidden="true">→</span></a>)}<a href="/features/">All features &amp; ambitions <span aria-hidden="true">→</span></a></nav>
+    </main>
+    <footer><p>pTOS is derived from <a href="https://github.com/emutos/emutos">EmuTOS</a>.</p><a href="https://github.com/kelihlodversson/pTOS/issues">Follow development</a></footer>
+  </div>
+</Layout>

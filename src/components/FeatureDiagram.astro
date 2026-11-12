@@ -1,0 +1,24 @@
+---
+const { kind } = Astro.props;
+---
+{kind === 'portability' && <figure class="feature-diagram">
+  <p class="diagram-label">A shared direction</p>
+  <div class="diagram-box diagram-emphasis"><strong>Common operating-system code</strong><span>GEMDOS · portable device and display interfaces</span></div>
+  <div class="diagram-connector" aria-hidden="true">↓</div>
+  <div class="diagram-columns"><div class="diagram-box"><strong>m68k</strong><span>CPU &amp; board support</span></div><div class="diagram-box"><strong>ARM</strong><span>CPU &amp; board support</span></div><div class="diagram-box"><strong>x86-64</strong><span>CPU &amp; board support</span></div></div>
+  <figcaption>Conceptual structure: share the operating-system work, isolate hardware differences. Feature and GUI coverage still vary by configuration.</figcaption>
+</figure>}
+{kind === 'memory' && <figure class="feature-diagram">
+  <p class="diagram-label">Protected configurations</p>
+  <div class="diagram-columns two"><div class="diagram-box"><strong>Process A</strong><span>Own page tables</span><span class="diagram-memory">Code · private data · stack</span></div><div class="diagram-box"><strong>Process B</strong><span>Own page tables</span><span class="diagram-memory">Code · private data · stack</span></div></div>
+  <p class="diagram-boundary">Checked system-call boundary</p>
+  <div class="diagram-box diagram-emphasis"><strong>Kernel — supervisor-only</strong><span>Memory ownership · validated user access · process lifecycle</span></div>
+  <figcaption>Private mappings can use the same virtual address in different processes. Clean library pages may be shared; this diagram shows ownership boundaries, not physical memory layout.</figcaption>
+</figure>}
+{kind === 'aes' && <figure class="feature-diagram">
+  <p class="diagram-label">Current x32 userspace AES path</p>
+  <div class="diagram-columns two"><div class="diagram-box"><strong>Application A + libaes.so</strong><span>Own address space</span><span class="diagram-memory">Objects · resources · dialog logic</span></div><div class="diagram-box"><strong>Application B + libaes.so</strong><span>Own address space</span><span class="diagram-memory">Objects · resources · dialog logic</span></div></div>
+  <p class="diagram-boundary">System calls — validated buffers, explicit ownership</p>
+  <div class="diagram-columns two"><div class="diagram-box diagram-emphasis"><strong>Kernel CUIS</strong><span>Windows · focus · input · ownership</span></div><div class="diagram-box diagram-emphasis"><strong>VDI services</strong><span>Drawing &amp; display access</span></div></div>
+  <figcaption>AES application logic lives in each process, with shared library code. The kernel coordinates shared state. There is no separate AES daemon.</figcaption>
+</figure>}
