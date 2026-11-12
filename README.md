@@ -142,3 +142,12 @@ from pTOS's `doc/screenshots/`; its feature page credits that source. The fonts
 page reuses TypeShelf's original specimen screenshot. Diagrams are conceptual
 ownership/architecture explanations, not hardware or memory-layout screenshots.
 `src/components/SiteHeader.astro` provides shared site navigation.
+
+Feature detail pages also list curated open tracker items under **Planned &
+ongoing work**. `src/data/feature-issues.ts` stores issue numbers, exact titles,
+links, context and the review date. Status is an editorial snapshot, not a live
+GitHub feed. Only mark work **In progress** when an active implementation is
+verified; the scheduling/clone entries link to draft PR #903 as evidence.
+When updating these lists, recheck issue and PR state, remove or reclassify
+closed work, and update `issuesReviewedAt`. No GitHub credentials or API calls
+are added to the static website or build.
