@@ -104,3 +104,8 @@ execution environment's outbound network policy.
 The decorative pTerry title bar uses the supplied Atari ST 8x16 System Font
 by divVerent, self-hosted at `public/fonts/AtariST8x16SystemFont.ttf`. Source:
 https://www.dafont.com/atari-st-8x16-system-font.font . Other text uses system fonts.
+
+The web font copy (`AtariST8x16SystemFont-web.ttf`) aliases the original close
+glyph at U+0085 to private-use U+E085. Browsers treat U+0085 as a control character;
+the alias preserves the exact glyph outlines while making it reliably renderable.
+The supplied original TTF is retained unchanged.
