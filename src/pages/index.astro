@@ -1,0 +1,38 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+<Layout>
+  <div class="site-shell">
+    <header class="site-header">
+      <a class="wordmark" href="/" aria-label="pTOS home">pTOS<span class="wordmark-dot" aria-hidden="true">.</span></a>
+      <span class="header-note">Portable by nature.</span>
+      <a class="header-link" href="https://github.com/kelihlodversson/pTOS">Source code <svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12 12 4M4 4h8v8" /></svg></a>
+    </header>
+    <main id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow"><span aria-hidden="true" class="status-dot"></span> Open source. Under active development.</p>
+          <h1 id="hero-title">pTOS <span>— Portable TOS</span></h1>
+          <p class="hero-heading">Classic roots.<br /><span>New horizons.</span></p>
+          <p class="introduction">pTOS is a portable, open-source, TOS-compatible operating system derived from EmuTOS. It preserves the familiar GEM environment while extending the architecture beyond classic Atari hardware, targeting m68k, ARM and x86-64 systems.</p>
+          <p class="development-note">The project is under active development.</p>
+          <div class="actions">
+            <a class="primary-link" href="https://github.com/kelihlodversson/pTOS">Explore on GitHub <svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12 12 4M4 4h8v8" /></svg></a>
+            <a class="secondary-link" href="https://github.com/kelihlodversson/pTOS/issues">Follow Development <svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12 12 4M4 4h8v8" /></svg></a>
+          </div>
+        </div>
+        <figure class="mascot-window">
+          <div class="window-bar" aria-hidden="true"><span class="window-box"></span><span class="window-lines"></span><span>Meet pTerry</span><span class="window-lines"></span><span class="window-box small"></span></div>
+          <img src="/images/pterry.webp" srcset="/images/pterry-640.webp 640w, /images/pterry.webp 1254w" sizes="(max-width: 760px) 90vw, 46vw" width="1254" height="1254" alt="pTerry, an orange pterodactyl with one wing raised and a skeptical expression, saying ‘I’m not a dinosaur.’" fetchpriority="high" />
+          <figcaption>A little prehistoric. A lot of possibility.</figcaption>
+        </figure>
+      </section>
+      <section class="direction" aria-labelledby="direction-title">
+        <div><p class="eyebrow">The direction</p><h2 id="direction-title">Familiar foundations.<br />Room to explore.</h2></div>
+        <p>Classic GEM at heart. A shared, portable architecture ahead. Work spans m68k, ARM and x86-64; support varies by target, and ports and subsystems are still evolving.</p>
+        <p class="architecture-label" aria-label="Target processor families">m68k <span aria-hidden="true">/</span> ARM <span aria-hidden="true">/</span> x86-64</p>
+      </section>
+    </main>
+    <footer><p>pTOS is derived from <a href="https://github.com/emutos/emutos">EmuTOS</a>. Built on a remarkable foundation.</p><a href="https://github.com/kelihlodversson/pTOS">pTOS on GitHub <svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12 12 4M4 4h8v8" /></svg></a></footer>
+  </div>
+</Layout>
