@@ -73,33 +73,29 @@ enable proxying and Cloudflare **Full (strict)** TLS. Keep HTML on standard cach
 
 The existing LICENSE is preserved.
 
-## Initial release: infrastructure handoff
+## CDN configuration
 
-The connected GitHub integration returned HTTP 403 (`Resource not accessible by
-integration`) for Pages creation and custom-domain updates, despite repository
-admin metadata. If Pages is still disabled, a repository administrator must:
+Cloudflare proxying was enabled on 2026-11-12 for all four apex A records and
+for the `www` CNAME. SSL/TLS mode is **Full (strict)**. GitHub Pages reports an
+approved certificate covering `ptos.dev` and `www.ptos.dev`, and HTTPS enforcement
+is enabled. GitHub Pages remains the origin and handles the canonical www-to-apex
+redirect; no Worker, Cloudflare Pages site or redirect rule was introduced.
 
-1. Open https://github.com/kelihlodversson/ptos.dev/settings/pages and select
-   **GitHub Actions** under Build and deployment → Source.
-2. Save **ptos.dev** as the custom domain before creating public DNS records.
-3. In Cloudflare's **ptos.dev** zone, create four DNS-only apex A records to
-   `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`,
-   and a DNS-only `www` CNAME to `kelihlodversson.github.io`.
-4. Run the Deploy to GitHub Pages workflow from Actions (or rerun the initial
-   failed run). Confirm deployment succeeds and Pages recognizes the domain.
-5. Wait for GitHub's certificate to cover `ptos.dev` and `www.ptos.dev`, verify
-   direct origin HTTPS, then enable **Enforce HTTPS** in Pages settings.
-6. Set Cloudflare SSL/TLS mode to **Full (strict)** and enable proxying on those
-   five DNS records. Leave unrelated records and services alone.
-7. Check `https://ptos.dev` returns this homepage and
-   `https://www.ptos.dev` redirects to the apex without loops. Verify normal
-   static caching and no stale HTML override.
+Cloudflare uses standard static-file caching. Browser Cache TTL is set to
+**Respect Existing Headers** (`0` in the API), retaining GitHub's cache policy.
+There is no Cache Everything rule or HTML cache override. Content-hashed Astro
+CSS uses new URLs on change; unversioned artwork and fonts follow origin TTLs.
 
-At inspection the zone was active but had no DNS records, page rules or Worker
-routes and no custom redirect/cache rulesets. SSL mode was Full. No DNS or TLS
-changes were applied because GitHub had not accepted the custom domain. Public
-validation also requires allowing `ptos.dev` and `www.ptos.dev` through this
-execution environment's outbound network policy.
+Configuration was read back successfully from Cloudflare. End-to-end HTTPS,
+cache response headers and the www redirect could not be verified from the
+execution environment because public URL access was blocked. To verify from an
+unrestricted connection, run `curl -I https://ptos.dev`, repeat against a static
+asset to inspect `cf-cache-status`, and run `curl -IL https://www.ptos.dev` to
+confirm the apex redirect without a TLS error or loop. New DNS proxy settings
+may take several minutes to propagate. Do not weaken TLS if an origin error
+appears; check the GitHub certificate and domain assignment instead.
+
+## Title-bar font
 
 The decorative pTerry title bar uses the supplied Atari ST 8x16 System Font
 by divVerent, self-hosted at `public/fonts/AtariST8x16SystemFont.ttf`. Source:
