@@ -18,7 +18,7 @@ export const projects = [
     sections: [
       { title: 'A shared development kit', text: 'The pTOS toolchain brings together target-specific GCC and GNU Binutils builds, libgcc, libcmini headers and libraries, and program startup objects. It provides a consistent starting point for building native C applications and the operating-system kernel.' },
       { title: 'Three target families', text: 'The SDK covers m68k ELF32 and MiNT PRG+ELF, ARM ELF32, and x86-64 using the x32 ABI for applications. The x86-64 toolchain also provides an LP64 mode for freestanding kernel work. Architecture and calling-convention choices must match the libraries and startup objects used by an application.' },
-      { title: 'Getting started', text: 'The repository documents source builds on Linux and macOS, Debian/Ubuntu release packages and a Homebrew tap. Its smoke tests check application ABIs, linking and compiler-runtime selection. Consult the current README and release notes for installation commands, supported versions and runtime validation results.' },
+      { title: 'Ready to install', text: 'Official SDK packages are available through the signed pTOS APT repository on Ubuntu and a Homebrew tap on macOS. Install all three targets together or choose a single SDK below. Source builds remain available for custom compiler versions.' },
     ],
   },
   {
