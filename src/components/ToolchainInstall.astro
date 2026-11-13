@@ -1,0 +1,50 @@
+---
+const apt = `curl -fsSL https://apt.ptos.dev/ptos-archive-keyring.gpg |
+  sudo tee /usr/share/keyrings/ptos-archive-keyring.gpg >/dev/null
+echo 'deb [arch=amd64 signed-by=/usr/share/keyrings/ptos-archive-keyring.gpg] https://apt.ptos.dev stable main' |
+  sudo tee /etc/apt/sources.list.d/ptos.list
+sudo apt update
+sudo apt install ptos-toolchain`;
+const brew = `brew tap kelihlodversson/ptos-toolchain https://github.com/kelihlodversson/pTOS-toolchain.git
+brew install kelihlodversson/ptos-toolchain/ptos-toolchain`;
+const check = `m68k-unknown-ptos-prgelf-gcc -dumpmachine
+arm-unknown-ptos-elf-gcc -dumpmachine
+x86_64-unknown-ptos-elfx32-gcc -dumpmachine`;
+---
+<section class="toolchain-install" aria-labelledby="install-toolchain">
+  <h2 id="install-toolchain">Install the toolchain</h2>
+  <p>Install the SDKs on your development computer to build pTOS applications and kernels. Each SDK includes GCC, GNU Binutils, libgcc, libcmini and startup objects. These packages do not install the pTOS operating system.</p>
+
+  <h3>Ubuntu 24.04 and 26.04 (amd64)</h3>
+  <p>Add the signed APT repository once, then install all three target SDKs with the <code>ptos-toolchain</code> metapackage. You need <code>curl</code> and administrator access.</p>
+  <pre><code>{apt}</code></pre>
+  <p>For a single target, install the corresponding package instead:</p>
+  <ul>
+    <li>m68k: <code>sudo apt install ptos-sdk-m68k</code></li>
+    <li>ARM: <code>sudo apt install ptos-sdk-arm</code></li>
+    <li>x86-64 / x32: <code>sudo apt install ptos-sdk-x86-64</code></li>
+  </ul>
+  <p>All three SDKs can coexist. Their target-prefixed commands are available without changing PATH. Other Debian/Ubuntu hosts have not been validated; check the <a href="https://github.com/kelihlodversson/pTOS-toolchain/blob/main/packaging/README.md#host-support-and-runtime-compatibility">host support matrix</a> before installing.</p>
+
+  <h3>macOS (Homebrew)</h3>
+  <p>With Homebrew and Apple’s Command Line Tools installed:</p>
+  <pre><code>{brew}</code></pre>
+  <p>For a single target, replace the final formula name with <code>ptos-m68k</code>, <code>ptos-arm</code> or <code>ptos-x86_64</code>. Prebuilt bottles cover Apple Silicon on macOS 26 (Tahoe) with Homebrew in <code>/opt/homebrew</code>. Other configurations may build from source and have not been validated by those tests.</p>
+
+  <h3>Check your installation</h3>
+  <p>After installing all three SDKs, run:</p>
+  <pre><code>{check}</code></pre>
+  <p>Each command prints its target name: <code>m68k-unknown-ptos-prgelf</code>, <code>arm-unknown-ptos-elf</code> or <code>x86_64-unknown-ptos-elfx32</code>.</p>
+  <p>For m68k GEMDOS PRG/ELF output, pass <code>-mmintelf</code> when linking; the default output is plain ELF. Continue with the <a href="https://github.com/kelihlodversson/pTOS-toolchain#build-a-c-application">C application examples</a> or <a href="https://github.com/kelihlodversson/pTOS-toolchain#build-the-ptos-kernel">pTOS kernel setup</a> for the required build tools and configuration.</p>
+  <p>APT retains a bounded selection of recent stable versions. Historical Debian packages remain available in <a href="https://github.com/kelihlodversson/pTOS-toolchain/releases">GitHub Releases</a>. The <a href="https://github.com/kelihlodversson/pTOS-toolchain#build">source-build instructions</a> cover custom compiler versions.</p>
+</section>
+
+<style>
+  .toolchain-install { min-width: 0; border-top: 1px solid var(--line); padding: 32px 0; }
+  h3 { margin-top: 32px; }
+  p, li { line-height: 1.8; }
+  ul { padding-left: 24px; }
+  code { font-family: ui-monospace, monospace; overflow-wrap: anywhere; }
+  pre { max-width: 100%; overflow-x: auto; padding: 18px; border: 1px solid var(--line); background: var(--panel, #f5f1e8); font-size: 13px; line-height: 1.7; }
+  pre code { overflow-wrap: normal; }
+</style>
