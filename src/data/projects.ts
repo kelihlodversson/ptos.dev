@@ -7,7 +7,17 @@ export const projects = [
     sections: [
       { title: 'Classic programs, different hosts', text: 'ParaTos emulates the m68000 CPU with Musashi and translates guest system calls into calls to the host operating system. It runs in userspace on Linux and macOS, with a separate native pTOS backend for ARM and x32. It translates operating-system calls rather than emulating an entire Atari ST.' },
       { title: 'The pTOS connection', text: 'The native pTOS backend provides shared guest loading, memory and process emulation, with architecture-specific syscall adapters. With the required kernel support and configuration, pTOS can dispatch classic 68k programs to ParaTos directly.' },
-      { title: 'Current scope', text: 'The native backend is boot-tested on ARM and x32. Compatibility depends on the system calls a program uses; programs that access hardware directly or patch operating-system trap vectors are outside its intended scope. GEM/AES support remains follow-up work. An optional x32 VDI adapter supports a documented subset of operations.' },
+      {
+        title: 'Staged guest execution',
+        text: 'ParaTOS #25 uses the pTOS host’s native Pclone to create a process for staged guest Pexec modes 4/6/104/106. It uses the host’s child PID and native Pgetpid, Pgetppid and Pwaitpid for process identity and waits. The PR remains an open draft. It reports a passing ptos_kernel_pclone test with a real 68k guest on pTOS under QEMU for Cortex-A7 ARM and x32, using ParaTOS 2721aacbc70f and pTOS ade3648bf3df.',
+        source: { label: 'ParaTOS #25 and native Pclone test results', url: 'https://github.com/SapionAps/ParaTos/pull/25' },
+      },
+      {
+        title: 'Boot and release status',
+        text: 'The separate GitHub Actions run passed the legacy ARM and x32 emulator boot tests with ParaTOS merge-test revision 65f66110c643 and pTOS fc3148179494. Physical-hardware results for the staged Pexec change are unreported. Release readiness is pending review.',
+        source: { label: 'ParaTOS CI run for the legacy boot tests', url: 'https://github.com/SapionAps/ParaTos/actions/runs/44807703581' },
+      },
+      { title: 'Current scope', text: 'Compatibility depends on the system calls a program uses. Programs that access hardware directly or patch operating-system trap vectors are outside the intended scope. Guest GEM/AES support remains follow-up work. An optional x32 VDI adapter supports a documented subset of operations.' },
     ],
   },
   {
@@ -18,7 +28,7 @@ export const projects = [
     sections: [
       { title: 'A shared development kit', text: 'The pTOS toolchain brings together target-specific GCC and GNU Binutils builds, libgcc, libcmini headers and libraries, and program startup objects. It provides a consistent starting point for building native C applications and the operating-system kernel.' },
       { title: 'Three target families', text: 'The SDK covers m68k ELF32 and MiNT PRG+ELF, ARM ELF32, and x86-64 using the x32 ABI for applications. The x86-64 toolchain also provides an LP64 mode for freestanding kernel work. Architecture and calling-convention choices must match the libraries and startup objects used by an application.' },
-      { title: 'Ready to install', text: 'Official SDK packages are available through the signed pTOS APT repository on Ubuntu and a Homebrew tap on macOS. Install all three targets together or choose a single SDK below. Source builds remain available for custom compiler versions.' },
+      { title: 'Ready to install', text: 'The stable SDK is available through the signed pTOS APT repository on Ubuntu and a Homebrew tap on macOS. Install all three targets together or choose a single SDK below. Source builds remain available for custom compiler versions.' },
     ],
   },
   {

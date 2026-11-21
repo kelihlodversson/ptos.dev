@@ -17,7 +17,11 @@ const { project } = Astro.props;
         <div class="actions"><a class="primary-link" href={project.repository}>Explore on GitHub <span aria-hidden="true">→</span></a><a class="secondary-link" href={`${project.repository}/issues`}>Follow Development <span aria-hidden="true">→</span></a></div>
       </div>
       <div class="project-sections">
-        {project.sections.map(section => <section><h2>{section.title}</h2><p>{section.text}</p></section>)}
+        {project.sections.map(section => <section>
+          <h2>{section.title}</h2>
+          <p>{section.text}</p>
+          {section.source && <p><a href={section.source.url}>{section.source.label}</a></p>}
+        </section>)}
       </div>
       {project.slug === 'toolchain' && <ToolchainInstall />}
       {project.slug === 'typeshelf' && <section class="screenshots" aria-labelledby="screenshots-title">

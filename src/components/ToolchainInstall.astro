@@ -14,6 +14,7 @@ x86_64-unknown-ptos-elfx32-gcc -dumpmachine`;
 <section class="toolchain-install" aria-labelledby="install-toolchain">
   <h2 id="install-toolchain">Install the toolchain</h2>
   <p>Install the SDKs on your development computer to build pTOS applications and kernels. Each SDK includes GCC, GNU Binutils, libgcc, libcmini and startup objects. These packages do not install the pTOS operating system.</p>
+  <p><a href="https://github.com/kelihlodversson/pTOS-toolchain/releases/tag/v1.0.3">Stable SDK release v1.0.3</a></p>
 
   <h3>Ubuntu 24.04 and 26.04 (amd64)</h3>
   <p>Add the signed APT repository once, then install all three target SDKs with the <code>ptos-toolchain</code> metapackage. You need <code>curl</code> and administrator access.</p>
@@ -30,6 +31,7 @@ x86_64-unknown-ptos-elfx32-gcc -dumpmachine`;
   <p>With Homebrew and Apple’s Command Line Tools installed:</p>
   <pre><code>{brew}</code></pre>
   <p>For a single target, replace the final formula name with <code>ptos-m68k</code>, <code>ptos-arm</code> or <code>ptos-x86_64</code>. Prebuilt bottles cover Apple Silicon on macOS 26 (Tahoe) with Homebrew in <code>/opt/homebrew</code>. Other configurations may build from source and have not been validated by those tests.</p>
+  <p>On a clean GitHub Actions Apple Silicon runner with macOS 26 (Tahoe), installing <code>ptos-toolchain</code> pulled all three published v1.0.3 bottles (<code>ptos-m68k</code>, <code>ptos-arm</code> and <code>ptos-x86_64</code>). Compiler smoke tests and strict linkage checks passed, verifying the SDK installation. <a href="https://github.com/kelihlodversson/pTOS-toolchain/pull/27">Bottle activation PR #27</a> · <a href="https://github.com/kelihlodversson/pTOS-toolchain/actions/runs/44301956778">Passing Homebrew CI run</a></p>
 
   <h3>Check your installation</h3>
   <p>After installing all three SDKs, run:</p>

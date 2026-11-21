@@ -20,10 +20,19 @@ export const features = [
     sections: [
       { title: 'A boundary between applications', text: 'Each protected process has its own page tables. Its code, stack and private data are mapped with explicit permissions; the kernel remains supervisor-only. Two processes can use the same virtual address for different private memory. Kernel services validate user pointers against the calling process’s mappings before copying data.' },
       { title: 'Implemented across more than x86-64', text: 'The x86-64 port runs x32 applications in ring 3. Per-process address-space configurations also exist on ARM and on m68k with a supported MMU, including documented QEMU, Hatari and Amiberry test configurations. These are specific configurations, not a blanket property of every ARM or Atari build.' },
+      { title: 'Native scheduling', text: 'The master branch has cooperative native scheduling on x32. Issue #713 closed as complete on epic/889-process-scheduling, with cooperative scheduling, scheduler ownership and synchronization, restart of interrupted user contexts, and 20 ms timer preemption on qualified single-CPU x32, Cortex-A7 and 68040 MMU configurations. Timer preemption is off by default (CONF_WITH_NATIVE_PREEMPT).' },
+      { title: 'Scheduler integration', text: 'PR #1044 validated the first managed native launch and PR #1045 added shared-address-space Pclone with an independently owned descriptor table. Both merged into epic/889-process-scheduling, which also has Pfork and Pvfork. PR #903, which would bring the epic into master, remains an open draft.' },
       { title: 'Important limits', text: 'Non-MMU configurations retain the flat TOS memory model. The 68030, 68040 and 68060 MMUs do not provide an execute-disable bit, so their readable data and stacks cannot be marked non-executable. Protected ARM/m68k configurations currently have no kernel AES and no port of external libaes, so a protected boot does not imply a protected GEM desktop.' },
       { title: 'The ambition', text: 'Build a reliable foundation for native applications, checked system-call boundaries and controlled sharing. Shared-library mappings can share clean pages while keeping writes private through copy-on-write. Memory protection is an architectural boundary; it is not a claim that every subsystem is hardened or that arbitrary legacy software is compatible.' },
     ],
-    sources: [{ label: 'x86-64 per-process address spaces', path: 'doc/x86_64-address-space.txt' }, { label: 'ARM and m68k MMU layout and limitations', path: 'doc/mmu-address-space.txt' }, { label: 'Mapping services and copy-on-write', path: 'doc/mmap.txt' }],
+    sources: [
+      { label: 'x86-64 per-process address spaces', path: 'doc/x86_64-address-space.txt' },
+      { label: 'ARM and m68k MMU layout and limitations', path: 'doc/mmu-address-space.txt' },
+      { label: 'Mapping services and copy-on-write', path: 'doc/mmap.txt' },
+      { label: 'Native scheduler acceptance (#713)', url: 'https://github.com/kelihlodversson/pTOS/issues/713' },
+      { label: 'First managed native launch (#1044)', url: 'https://github.com/kelihlodversson/pTOS/pull/1044' },
+      { label: 'Pclone descriptor inheritance (#1045)', url: 'https://github.com/kelihlodversson/pTOS/pull/1045' },
+    ],
     related: [{ label: 'Userspace AES', href: '/features/userspace-aes/' }, { label: 'Platform status', href: '/features/platforms/' }],
   },
   {
@@ -33,10 +42,17 @@ export const features = [
     sections: [
       { title: 'A library, not an AES daemon', text: 'Applications link to libaes.so and use familiar GEM headers and calls such as appl_init, evnt_multi and wind_open. Object trees, resource parsing, dialog behavior and much of the rendering logic stay with the application. There is no separate userspace AES server, and applications do not need to speak the internal kernel protocol directly.' },
       { title: 'What stays in the kernel', text: 'Core User Interface Services, or CUIS, coordinate sessions, window ownership, stacking, visible regions, focus, input delivery and waits. VDI provides drawing and display services. The kernel owns authoritative shared state and process teardown, while libaes translates familiar GEM behavior onto those boundaries.' },
-      { title: 'What has been exercised', text: 'The current x32 path includes a resident shared-library desktop, standard GEM applications, accessories and RCS resource load/edit/save/reload regression coverage. The earlier typed kernel AES service has been retired on this path. Execution is cooperative; preemption and Pfork remain follow-up work.' },
-      { title: 'The ambition and the limits', text: 'Preserve useful GEM source compatibility while fitting a protected, portable application model. The compatibility inventory records available, partial and missing calls: it is not a claim of complete MagiC or XaAES extension support. External libaes is currently x32-only and off by default. ARM and m68k retain kernel AES in flat configurations; bringing userspace AES to their protected configurations is still future work.' },
+      { title: 'What has been exercised', text: 'The current x32 path includes a resident shared-library desktop, standard GEM applications, accessories and RCS resource load/edit/save/reload regression coverage. The earlier typed kernel AES service has been retired on this path.' },
+      { title: 'Scheduling in the desktop configurations', text: 'The x32 libaes desktop and desktop test presets use cooperative scheduling. Applications give other tasks a chance to run at blocking CUIS calls, child waits and explicit yields. The scheduler epic adds opt-in timer preemption in the kernel. CONF_WITH_NATIVE_PREEMPT defaults to off, and the desktop presets leave it off. Integration into master is tracked in draft PR #903.' },
+      { title: 'The ambition and the limits', text: 'Preserve useful GEM source compatibility while fitting a protected, portable application model. The compatibility inventory records available, partial and missing calls, including MagiC and XaAES extensions. External libaes is experimental, x32-only and off by default. ARM and m68k retain kernel AES in flat configurations. The external libaes and CUIS port to protected ARM and m68k configurations is tracked in #898.' },
     ],
-    sources: [{ label: 'Userspace AES and the CUIS ownership boundary', path: 'doc/cuis.txt' }, { label: 'Current API and configuration compatibility matrix', path: 'doc/libaes-compatibility.md' }, { label: 'Shell behavior and deferred extensions', path: 'doc/libaes-shell-compatibility.md' }],
+    sources: [
+      { label: 'Userspace AES and the CUIS ownership boundary', path: 'doc/cuis.txt' },
+      { label: 'Current API and configuration compatibility matrix', path: 'doc/libaes-compatibility.md' },
+      { label: 'Shell behavior and deferred extensions', path: 'doc/libaes-shell-compatibility.md' },
+      { label: 'x32 desktop configuration', path: 'configs/pc-x86_64-desktop_defconfig' },
+      { label: 'Scheduler integration and preemption gate (draft #903)', url: 'https://github.com/kelihlodversson/pTOS/pull/903' },
+    ],
     related: [{ label: 'Address spaces', href: '/features/address-spaces/' }, { label: 'RCS integration', href: '/apps/rcs/' }],
   },
   {
