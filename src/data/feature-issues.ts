@@ -1,5 +1,5 @@
 // Curated tracker snapshots, not build-time or browser GitHub API calls.
-export const issuesReviewedAt = "2026-11-12";
+export const issuesReviewedAt = "2026-11-21";
 type FeatureIssue = {
   number: number;
   title: string;
@@ -15,8 +15,7 @@ export const featureIssues: Record<string, FeatureIssue[]> = {
     {"number": 75, "title": "Make QEMU ARM virt hardware discovery device-tree driven", "url": "https://github.com/kelihlodversson/pTOS/issues/75", "summary": "Replace fixed ARM hardware addresses with shared Device Tree resource discovery.", "status": "Open"},
   ],
   "address-spaces": [
-    {"number": 713, "title": "Complete generic native scheduling and MiNT multitasking across architectures", "url": "https://github.com/kelihlodversson/pTOS/issues/713", "summary": "Complete architecture-neutral scheduling and preemption on supported MMU targets.", "status": "In progress", "implementation": {"label": "Implementation: draft PR #903", "url": "https://github.com/kelihlodversson/pTOS/pull/903"}},
-    {"number": 889, "title": "Epic: Pclone / xclone / proc_clone, thread-process-address-space model and MiNT/MagiC compatibility", "url": "https://github.com/kelihlodversson/pTOS/issues/889", "summary": "Separate process, thread and address-space lifetimes and define clone/fork behavior.", "status": "In progress", "implementation": {"label": "Implementation: draft PR #903", "url": "https://github.com/kelihlodversson/pTOS/pull/903"}},
+    {"number": 889, "title": "Epic: Pclone / xclone / proc_clone, THREAD/PROCESS/ASPACE and MiNT process compatibility", "url": "https://github.com/kelihlodversson/pTOS/issues/889", "summary": "Integrate the native scheduler and process APIs into master and finish validation of the release configurations.", "status": "In progress", "implementation": {"label": "Integration into master: open draft PR #903", "url": "https://github.com/kelihlodversson/pTOS/pull/903"}},
     {"number": 76, "title": "Add ARM32 LPAE and high physical-address MMIO support", "url": "https://github.com/kelihlodversson/pTOS/issues/76", "summary": "Extend ARM32 physical addressing and device mappings with LPAE.", "status": "Open"},
   ],
   "userspace-aes": [
