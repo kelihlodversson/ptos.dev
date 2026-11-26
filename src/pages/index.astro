@@ -13,9 +13,9 @@ import SiteHeader from '../components/SiteHeader.astro';
           <h1 id="hero-title">pTOS <span>— Portable TOS</span></h1>
           <p class="hero-heading">Classic roots.<br /><span>New horizons.</span></p>
           <p class="introduction">pTOS is a portable, open-source, TOS-compatible operating system derived from EmuTOS. It preserves the familiar GEM environment while extending the architecture beyond classic Atari hardware, targeting m68k, ARM and x86-64 systems.</p>
-          <p class="development-note">The project is under active development.</p>
+          <p class="development-note">The x86-64 port uses the x32 ABI for applications.</p>
           <div class="actions">
-            <a class="primary-link" href="https://github.com/kelihlodversson/pTOS">Explore on GitHub <svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12 12 4M4 4h8v8" /></svg></a>
+            <a class="primary-link" href="https://docs.ptos.dev/">Read the Programmer’s Reference <svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12 12 4M4 4h8v8" /></svg></a>
             <a class="secondary-link" href="https://github.com/kelihlodversson/pTOS/issues">Follow Development <svg aria-hidden="true" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 12 12 4M4 4h8v8" /></svg></a>
           </div>
         </div>
@@ -31,8 +31,8 @@ import SiteHeader from '../components/SiteHeader.astro';
         <p class="architecture-label" aria-label="Target processor families">m68k <span aria-hidden="true">/</span> ARM <span aria-hidden="true">/</span> x86-64</p>
       </section>
       <section class="feature-home" aria-labelledby="feature-home-title">
-        <div><p class="eyebrow">Features &amp; Ambitions</p><h2 id="feature-home-title">Familiar GEM.<br />A different foundation.</h2></div>
-        <div><p>Multiple processor architectures. Separate process address spaces on supported MMU configurations. An experimental userspace AES for x32. Explore what pTOS does today, and the ambitions shaping its next steps.</p><a class="read-more" href="/features/">Explore features &amp; ambitions <span aria-hidden="true">→</span></a></div>
+        <div><p class="eyebrow">Development status</p><h2 id="feature-home-title">Native processes and threads</h2></div>
+        <div><p>pTOS now schedules native processes and threads on supported MMU builds. Eligible x32, ARMv7 and 68040 configurations enable timer preemption by default. An experimental x32 desktop runs GEM application services in a shared userspace library.</p><a class="read-more" href="/features/">Explore features &amp; ambitions <span aria-hidden="true">→</span></a></div>
       </section>
       {['projects', 'apps'].map(group => <section class="project-directory" id={group} aria-labelledby={`${group}-title`}>
         <div class="directory-heading"><p class="eyebrow">{group === 'projects' ? 'Building the foundations' : 'Made for GEM'}</p><h2 id={`${group}-title`}>{group === 'projects' ? 'Subprojects' : 'Related apps'}</h2><p>{group === 'projects' ? 'Tools, libraries and compatibility work that help the pTOS ecosystem grow.' : 'Classic ideas and new tools, taking shape alongside pTOS.'}</p></div>

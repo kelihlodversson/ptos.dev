@@ -6,6 +6,7 @@ const isFeature = Astro.url.pathname.startsWith('/features/');
   <span class="header-note">Portable by nature.</span>
   <nav class="site-nav" aria-label="Main navigation">
     <a href="/features/" aria-current={Astro.url.pathname === '/features/' ? 'page' : undefined} class:list={{ 'nav-active': isFeature }}>Features &amp; Ambitions</a>
+    <a href="https://docs.ptos.dev/">Documentation</a>
     <a href="/#projects">Subprojects</a>
     <a href="/#apps">Related apps</a>
   </nav>

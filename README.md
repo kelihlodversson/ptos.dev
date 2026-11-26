@@ -33,9 +33,9 @@ alt text and Open Graph metadata if needed. The current original is an opaque
 1254 × 1254 JPEG; WebP copies use quality 91. No mascot has been redrawn.
 The favicon is a typographic `p` using the site's rust accent.
 
-Keep future pages in `src/pages/` and reuse the layout. Downloads, documentation
-and news remain outside the current scope. Verify technical claims
-against the pTOS readme and current source documentation before changing copy.
+Keep future pages in `src/pages/` and reuse the layout. The Programmer’s Reference
+is maintained at https://docs.ptos.dev/ and linked from the shared navigation and
+homepage. Verify technical claims against the pTOS source before changing copy.
 
 ## Deployment and domain
 
@@ -129,9 +129,11 @@ no diagram runtime or client JavaScript is shipped. `features/platforms.astro`
 keeps the main architecture/configuration comparison in one place.
 
 Technical content was reviewed against pTOS source revision
-`fc3148179494f1b507ed38ee4c328ad52624fecf` on 2026-11-12, particularly
-`doc/libaes-compatibility.md`, `doc/cuis.txt`, `doc/mmu-address-space.txt`,
-`doc/x86_64-address-space.txt`, `doc/elf-shared.txt` and `doc/status.txt`.
+`4b974eb10026f5f251a9dc1ad341031158cdfde5` on 2026-11-26, particularly
+`doc/native-scheduler-plan.txt`, `doc/native-timer-preemption.txt`,
+`doc/exec-replacement.txt`, `doc/libaes-compatibility.md`, and `doc/status.txt`.
+Update `sourceRevision` in `src/data/features.ts` when rechecking the evidence
+links against a newer revision.
 Some documents retain historical design material: the current libaes inventory
 is the authority for its API and configuration scope, not the retired typed
 kernel AES service. Keep userspace AES's x32-only status and the GUI limits of
@@ -147,7 +149,7 @@ Feature detail pages also list curated open tracker items under **Planned &
 ongoing work**. `src/data/feature-issues.ts` stores issue numbers, exact titles,
 links, context and the review date. Status is an editorial snapshot, not a live
 GitHub feed. Only mark work **In progress** when an active implementation is
-verified; the scheduling/clone entries link to draft PR #903 as evidence.
+verified.
 When updating these lists, recheck issue and PR state, remove or reclassify
 closed work, and update `issuesReviewedAt`. No GitHub credentials or API calls
 are added to the static website or build.

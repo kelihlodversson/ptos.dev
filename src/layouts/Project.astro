@@ -19,8 +19,10 @@ const { project } = Astro.props;
       <div class="project-sections">
         {project.sections.map(section => <section>
           <h2>{section.title}</h2>
-          <p>{section.text}</p>
-          {section.source && <p><a href={section.source.url}>{section.source.label}</a></p>}
+          <div>
+            <p>{section.text}</p>
+            {section.source && <p class="project-source"><a href={section.source.url}>{section.source.label}</a></p>}
+          </div>
         </section>)}
       </div>
       {project.slug === 'toolchain' && <ToolchainInstall />}
@@ -36,3 +38,7 @@ const { project } = Astro.props;
     <footer><p>pTOS is derived from <a href="https://github.com/emutos/emutos">EmuTOS</a>.</p><a href="/">Back to pTOS</a></footer>
   </div>
 </Layout>
+
+<style>
+  .project-sections .project-source { margin-top: 8px; }
+</style>

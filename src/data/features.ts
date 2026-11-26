@@ -1,4 +1,5 @@
-export const sourceRoot = 'https://github.com/kelihlodversson/pTOS/blob/master/';
+const sourceRevision = '4b974eb10026f5f251a9dc1ad341031158cdfde5';
+export const sourceRoot = `https://github.com/kelihlodversson/pTOS/blob/${sourceRevision}/`;
 export const features = [
   {
     slug: 'portable-architecture', title: 'Portable architecture', shortTitle: 'Multiple architectures',
@@ -20,8 +21,8 @@ export const features = [
     sections: [
       { title: 'A boundary between applications', text: 'Each protected process has its own page tables. Its code, stack and private data are mapped with explicit permissions; the kernel remains supervisor-only. Two processes can use the same virtual address for different private memory. Kernel services validate user pointers against the calling process’s mappings before copying data.' },
       { title: 'Implemented across more than x86-64', text: 'The x86-64 port runs x32 applications in ring 3. Per-process address-space configurations also exist on ARM and on m68k with a supported MMU, including documented QEMU, Hatari and Amiberry test configurations. These are specific configurations, not a blanket property of every ARM or Atari build.' },
-      { title: 'Native scheduling', text: 'The master branch has cooperative native scheduling on x32. Issue #713 closed as complete on epic/889-process-scheduling, with cooperative scheduling, scheduler ownership and synchronization, restart of interrupted user contexts, and 20 ms timer preemption on qualified single-CPU x32, Cortex-A7 and 68040 MMU configurations. Timer preemption is off by default (CONF_WITH_NATIVE_PREEMPT).' },
-      { title: 'Scheduler integration', text: 'PR #1044 validated the first managed native launch and PR #1045 added shared-address-space Pclone with an independently owned descriptor table. Both merged into epic/889-process-scheduling, which also has Pfork and Pvfork. PR #903, which would bring the epic into master, remains an open draft.' },
+      { title: 'Native scheduling', text: 'CONF_WITH_MULTITHREADING defaults on for eligible x32, ARMv7 and m68k user-address-space builds. It enables native processes and threads, asynchronous launch, thread joins and process waits. CONF_WITH_PREEMPTION defaults on for qualified single-CPU x32, ARMv7 and 68040 stack-ABI configurations, using a 20 ms timer quantum for eligible user contexts. Disabling it selects cooperative scheduling.' },
+      { title: 'Process creation and fork', text: 'Pclone can add a thread or start a process that shares the caller’s address space and can have its own descriptor table. Pfork and Pvfork use copy-on-write on eligible eager-allocation and demand-paged MMU builds. Pvfork suspends the caller until the child exits or replaces its executable. Classic 68k ROM-window and fastcall configurations are outside the fork profile.' },
       { title: 'Important limits', text: 'Non-MMU configurations retain the flat TOS memory model. The 68030, 68040 and 68060 MMUs do not provide an execute-disable bit, so their readable data and stacks cannot be marked non-executable. Protected ARM/m68k configurations currently have no kernel AES and no port of external libaes, so a protected boot does not imply a protected GEM desktop.' },
       { title: 'The ambition', text: 'Build a reliable foundation for native applications, checked system-call boundaries and controlled sharing. Shared-library mappings can share clean pages while keeping writes private through copy-on-write. Memory protection is an architectural boundary; it is not a claim that every subsystem is hardened or that arbitrary legacy software is compatible.' },
     ],
@@ -29,11 +30,11 @@ export const features = [
       { label: 'x86-64 per-process address spaces', path: 'doc/x86_64-address-space.txt' },
       { label: 'ARM and m68k MMU layout and limitations', path: 'doc/mmu-address-space.txt' },
       { label: 'Mapping services and copy-on-write', path: 'doc/mmap.txt' },
-      { label: 'Native scheduler acceptance (#713)', url: 'https://github.com/kelihlodversson/pTOS/issues/713' },
-      { label: 'First managed native launch (#1044)', url: 'https://github.com/kelihlodversson/pTOS/pull/1044' },
-      { label: 'Pclone descriptor inheritance (#1045)', url: 'https://github.com/kelihlodversson/pTOS/pull/1045' },
+      { label: 'Native process and scheduler defaults', path: 'doc/native-scheduler-plan.txt' },
+      { label: 'pTOS fork compatibility and configuration limits', path: 'doc/freemint-compatibility.txt#L20-L33' },
+      { label: 'Native scheduler and process APIs merged to master (#903)', url: 'https://github.com/kelihlodversson/pTOS/pull/903' },
     ],
-    related: [{ label: 'Userspace AES', href: '/features/userspace-aes/' }, { label: 'Platform status', href: '/features/platforms/' }],
+    related: [{ label: 'Userspace AES', href: '/features/userspace-aes/' }, { label: 'Platform status', href: '/features/platforms/' }, { label: 'Process function reference', href: 'https://docs.ptos.dev/subsystems/gemdos/process-functions/' }],
   },
   {
     slug: 'userspace-aes', title: 'Userspace AES', shortTitle: 'AES in userspace',
@@ -43,7 +44,7 @@ export const features = [
       { title: 'A library, not an AES daemon', text: 'Applications link to libaes.so and use familiar GEM headers and calls such as appl_init, evnt_multi and wind_open. Object trees, resource parsing, dialog behavior and much of the rendering logic stay with the application. There is no separate userspace AES server, and applications do not need to speak the internal kernel protocol directly.' },
       { title: 'What stays in the kernel', text: 'Core User Interface Services, or CUIS, coordinate sessions, window ownership, stacking, visible regions, focus, input delivery and waits. VDI provides drawing and display services. The kernel owns authoritative shared state and process teardown, while libaes translates familiar GEM behavior onto those boundaries.' },
       { title: 'What has been exercised', text: 'The current x32 path includes a resident shared-library desktop, standard GEM applications, accessories and RCS resource load/edit/save/reload regression coverage. The earlier typed kernel AES service has been retired on this path.' },
-      { title: 'Scheduling in the desktop configurations', text: 'The x32 libaes desktop and desktop test presets use cooperative scheduling. Applications give other tasks a chance to run at blocking CUIS calls, child waits and explicit yields. The scheduler epic adds opt-in timer preemption in the kernel. CONF_WITH_NATIVE_PREEMPT defaults to off, and the desktop presets leave it off. Integration into master is tracked in draft PR #903.' },
+      { title: 'Scheduling in the x32 desktop preset', text: 'The x32 desktop preset enables the experimental libaes stack and uses default-on timer preemption for eligible user contexts. Blocking calls, child waits and explicit yields also hand execution to other runnable tasks. The kernel’s scheduling configuration is shared with headless builds.' },
       { title: 'The ambition and the limits', text: 'Preserve useful GEM source compatibility while fitting a protected, portable application model. The compatibility inventory records available, partial and missing calls, including MagiC and XaAES extensions. External libaes is experimental, x32-only and off by default. ARM and m68k retain kernel AES in flat configurations. The external libaes and CUIS port to protected ARM and m68k configurations is tracked in #898.' },
     ],
     sources: [
@@ -51,7 +52,7 @@ export const features = [
       { label: 'Current API and configuration compatibility matrix', path: 'doc/libaes-compatibility.md' },
       { label: 'Shell behavior and deferred extensions', path: 'doc/libaes-shell-compatibility.md' },
       { label: 'x32 desktop configuration', path: 'configs/pc-x86_64-desktop_defconfig' },
-      { label: 'Scheduler integration and preemption gate (draft #903)', url: 'https://github.com/kelihlodversson/pTOS/pull/903' },
+      { label: 'Timer preemption and supported user contexts', path: 'doc/native-timer-preemption.txt' },
     ],
     related: [{ label: 'Address spaces', href: '/features/address-spaces/' }, { label: 'RCS integration', href: '/apps/rcs/' }],
   },
@@ -61,11 +62,12 @@ export const features = [
     summary: 'Alongside the classic m68k TOS program environment, pTOS supports native ELF applications and is developing standard ELF shared libraries. A dedicated GCC and Binutils SDK, libcmini and startup code connect the operating system to familiar C development tools.',
     sections: [
       { title: 'Native code for each processor', text: 'The native loader supports ELF32 applications on supported targets. The SDK supplies m68k, ARM and x32 compiler targets, library variants and program startup objects. A native ARM or x32 executable is built for that architecture; portability does not mean a classic m68k binary becomes native code on another CPU.' },
+      { title: 'Replacing a running program', text: 'Pexec(200) replaces the executable in the same process on eligible builds with native scheduling and a supported loader. Classic m68k MMU builds can replace a PRG with ELF or ELF with a PRG. The new executable’s format determines its startup ABI, and PRG-only builds support PRG replacement.' },
       { title: 'Shared libraries outside the kernel', text: 'An experimental userspace runtime linker, LD.SO, loads dependencies, resolves symbols and applies relocations. The documented implementation has x32, ARM and m68k backends, with shared libraries tied to protected address spaces and demand paging. This is the foundation used by the x32 shared libaes path.' },
       { title: 'What is still evolving', text: 'Shared-library support is off by default and requires specific architecture and memory options. The current linker eagerly binds symbols; a complete shared libcmini remains unfinished. Non-MMU shared-library loading is outside this implementation. ABI and loader details belong in the current SDK and source documentation.' },
       { title: 'The ambition', text: 'Make native application development straightforward without discarding classic TOS roots. The SDK and libcmini port supply practical building blocks; ParaTos separately explores running compatible classic m68k programs through emulation and system-call translation on other hosts.' },
     ],
-    sources: [{ label: 'Native ELF executable loader', path: 'doc/elfload.txt' }, { label: 'Shared libraries, LD.SO and supported backends', path: 'doc/elf-shared.txt' }, { label: 'Native process entry contracts', path: 'doc/process-entry.txt' }],
+    sources: [{ label: 'Native ELF executable loader', path: 'doc/elfload.txt' }, { label: 'Shared libraries, LD.SO and supported backends', path: 'doc/elf-shared.txt' }, { label: 'Native process entry contracts', path: 'doc/process-entry.txt' }, { label: 'Executable replacement and loader requirements', path: 'doc/exec-replacement.txt#L214-L242' }],
     related: [{ label: 'pTOS toolchain', href: '/projects/toolchain/' }, { label: 'libcmini port', href: '/projects/libcmini/' }, { label: 'ParaTos', href: '/projects/paratos/' }],
   },
   {
