@@ -1,5 +1,5 @@
 // Curated tracker snapshots, not build-time or browser GitHub API calls.
-export const issuesReviewedAt = "2026-11-21";
+export const issuesReviewedAt = "2026-11-26";
 type FeatureIssue = {
   number: number;
   title: string;
@@ -15,7 +15,6 @@ export const featureIssues: Record<string, FeatureIssue[]> = {
     {"number": 75, "title": "Make QEMU ARM virt hardware discovery device-tree driven", "url": "https://github.com/kelihlodversson/pTOS/issues/75", "summary": "Replace fixed ARM hardware addresses with shared Device Tree resource discovery.", "status": "Open"},
   ],
   "address-spaces": [
-    {"number": 889, "title": "Epic: Pclone / xclone / proc_clone, THREAD/PROCESS/ASPACE and MiNT process compatibility", "url": "https://github.com/kelihlodversson/pTOS/issues/889", "summary": "Integrate the native scheduler and process APIs into master and finish validation of the release configurations.", "status": "In progress", "implementation": {"label": "Integration into master: open draft PR #903", "url": "https://github.com/kelihlodversson/pTOS/pull/903"}},
     {"number": 76, "title": "Add ARM32 LPAE and high physical-address MMIO support", "url": "https://github.com/kelihlodversson/pTOS/issues/76", "summary": "Extend ARM32 physical addressing and device mappings with LPAE.", "status": "Open"},
   ],
   "userspace-aes": [
@@ -26,6 +25,7 @@ export const featureIssues: Record<string, FeatureIssue[]> = {
     {"number": 886, "title": "libaes: finish extended window and clipboard compatibility", "url": "https://github.com/kelihlodversson/pTOS/issues/886", "summary": "Complete applicable extended window and clipboard behavior.", "status": "Open"},
   ],
   "native-applications": [
+    {"number": 1008, "title": "Epic: Pexecve-first process ABI, native ELF argv startup and 68k-only Pexec compatibility", "url": "https://github.com/kelihlodversson/pTOS/issues/1008", "summary": "Track the planned Pexecve interface and native ELF argument startup alongside classic 68k Pexec compatibility.", "status": "Open"},
     {"number": 673, "title": "Complete shared libcmini integration for native applications", "url": "https://github.com/kelihlodversson/pTOS/issues/673", "summary": "Complete a separately linked shared libcmini for native dynamic applications.", "status": "Open"},
     {"number": 323, "title": "FDPIC execution: independently loadable regions and function descriptors", "url": "https://github.com/kelihlodversson/pTOS/issues/323", "summary": "Explore independently placed executable regions and function descriptors, including non-MMU use.", "status": "Open"},
     {"number": 83, "title": "Add ELF64 userspace and a native 64-bit process ABI", "url": "https://github.com/kelihlodversson/pTOS/issues/83", "summary": "Define ELF64 loading and a native 64-bit userspace ABI alongside ELF32 support.", "status": "Open"},
@@ -38,7 +38,7 @@ export const featureIssues: Record<string, FeatureIssue[]> = {
   "tos-gem": [
     {"number": 674, "title": "m68k: emulate Super() and Supexec() in user mode for classic programs", "url": "https://github.com/kelihlodversson/pTOS/issues/674", "summary": "Explore protected user-mode emulation of classic m68k Super() and Supexec() behavior.", "status": "Open"},
     {"number": 836, "title": "AES: Support version 3 (RSXHDR) resource files with 32-bit offsets", "url": "https://github.com/kelihlodversson/pTOS/issues/836", "summary": "Support version-3 resource headers and 32-bit resource offsets.", "status": "Open"},
-    {"number": 198, "title": "Add long filename support and FreeMiNT-compatible Dopendir/Dreaddir", "url": "https://github.com/kelihlodversson/pTOS/issues/198", "summary": "Add long filenames and FreeMiNT-compatible directory enumeration.", "status": "Open"},
+    {"number": 198, "title": "[VFS] LFN and FreeMiNT directory API; Fsfirst/Fsnext wrappers on m68k only", "url": "https://github.com/kelihlodversson/pTOS/issues/198", "summary": "Add long filenames and FreeMiNT directory enumeration, with classic search wrappers for m68k.", "status": "Open"},
   ],
   "hardware-devices": [
     {"number": 75, "title": "Make QEMU ARM virt hardware discovery device-tree driven", "url": "https://github.com/kelihlodversson/pTOS/issues/75", "summary": "Discover ARM platform resources from Device Tree instead of hardcoded addresses.", "status": "Open"},
